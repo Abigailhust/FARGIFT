@@ -1,0 +1,25 @@
+{
+  "name": "fargift-miniapp",
+  "version": "1.0.0",
+  "description": "FARGIFT Mini App - 链上礼物系统",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ethers": "^6.8.1",
+    "wagmi": "^1.4.7",
+    "viem": "^1.19.9",
+    "@rainbow-me/rainbowkit": "^1.2.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "vite": "^4.4.5"
+  }
+} 

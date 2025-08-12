@@ -1,0 +1,454 @@
+/* 全局样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 头部样式 */
+.App-header {
+  text-align: center;
+  margin-bottom: 30px;
+  color: white;
+}
+
+.App-header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.App-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* 导航样式 */
+.App-nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.App-nav button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.App-nav button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.App-nav button.active {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 主要内容区域 */
+.App-main {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* 连接按钮样式 */
+.connect-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.connection-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.connection-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.connect-btn, .disconnect-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.connect-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.connect-btn:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+}
+
+.disconnect-btn {
+  background: #f44336;
+  color: white;
+}
+
+.disconnect-btn:hover {
+  background: #da190b;
+}
+
+.address {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 15px;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+/* 礼物卡片样式 */
+.presents-container {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.present-card {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  border: 1px solid #e9ecef;
+  transition: transform 0.3s ease;
+}
+
+.present-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.present-card.live {
+  border-left: 4px solid #28a745;
+}
+
+.present-card.historic {
+  border-left: 4px solid #6c757d;
+}
+
+.present-card.mine {
+  border-left: 4px solid #007bff;
+}
+
+.present-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.present-title {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0;
+}
+
+/* 状态徽章 */
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-unwrapped {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status-taken-back {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-expired {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-unknown {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+/* 礼物详情 */
+.present-details {
+  margin-bottom: 20px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 5px 0;
+}
+
+.detail-row .label {
+  font-weight: 500;
+  color: #666;
+}
+
+.detail-row .value {
+  color: #333;
+  font-family: monospace;
+}
+
+.detail-row .value.amount {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.detail-row .value.address {
+  color: #007bff;
+}
+
+.detail-row .value.recipient {
+  color: #6f42c1;
+}
+
+.detail-row .value.limit {
+  color: #fd7e14;
+}
+
+/* 礼物操作按钮 */
+.present-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.claim-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.claim-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.takeback-btn {
+  background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.takeback-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 167, 38, 0.4);
+}
+
+.explore-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.explore-btn:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+/* 表单样式 */
+.gift-form, .unwrap-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.form-group input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+/* 按钮样式 */
+.submit-btn, .unwrap-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.submit-btn:hover, .unwrap-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* 组件标题 */
+.gift-creator h2, .gift-unwrapper h2, .gift-list h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 2rem;
+}
+
+/* 帮助文本 */
+.help-text {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+}
+
+.help-text p {
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #333;
+}
+
+.help-text ul {
+  margin-left: 20px;
+}
+
+.help-text li {
+  margin-bottom: 5px;
+  color: #666;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .App {
+    padding: 15px;
+  }
+  
+  .App-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .App-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .App-nav button {
+    width: 200px;
+  }
+  
+  .App-main {
+    padding: 20px;
+  }
+  
+  .present-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .present-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .connection-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .connection-actions button {
+    width: 200px;
+  }
+} 
