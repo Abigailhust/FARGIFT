@@ -121,6 +121,12 @@ body {
   transform: translateY(-2px);
 }
 
+.connect-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .disconnect-btn {
   background: #f44336;
   color: white;
@@ -136,6 +142,44 @@ body {
   border-radius: 15px;
   font-family: monospace;
   font-size: 0.9rem;
+}
+
+.balance {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+  padding: 8px 16px;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+/* 余额信息 */
+.balance-info {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #e8f5e8;
+  border-radius: 10px;
+  border: 1px solid #c8e6c9;
+}
+
+.balance-info p {
+  margin: 0;
+  color: #2e7d32;
+  font-size: 1.1rem;
+}
+
+/* 未连接状态 */
+.not-connected {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.not-connected p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
 }
 
 /* 礼物卡片样式 */
@@ -183,6 +227,83 @@ body {
   font-size: 1.2rem;
   color: #333;
   margin: 0;
+}
+
+/* 礼物项目样式 */
+.gifts-container {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.gift-item {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  border: 1px solid #e9ecef;
+  transition: transform 0.3s ease;
+}
+
+.gift-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gift-item.active {
+  border-left: 4px solid #28a745;
+}
+
+.gift-item.unwrapped {
+  border-left: 4px solid #007bff;
+}
+
+.gift-item.taken_back {
+  border-left: 4px solid #ff9800;
+}
+
+.gift-item.expired {
+  border-left: 4px solid #dc3545;
+}
+
+.gift-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.gift-id {
+  font-family: monospace;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.gift-title {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.gift-title h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.gift-details {
+  margin-bottom: 20px;
+}
+
+.gift-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 15px;
+  border-top: 1px solid #e9ecef;
 }
 
 /* 状态徽章 */
@@ -333,16 +454,21 @@ body {
 }
 
 .form-group input[type="text"],
-.form-group input[type="number"] {
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
   width: 100%;
   padding: 12px;
   border: 2px solid #e1e5e9;
   border-radius: 10px;
   font-size: 16px;
   transition: border-color 0.3s ease;
+  font-family: inherit;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
   outline: none;
   border-color: #667eea;
 }
@@ -350,6 +476,190 @@ body {
 .form-group input[type="checkbox"] {
   margin-right: 10px;
   transform: scale(1.2);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* 收件人输入组 */
+.recipient-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.recipient-input input {
+  flex: 2;
+}
+
+.recipient-input select {
+  flex: 1;
+}
+
+.remove-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: #c82333;
+  transform: scale(1.1);
+}
+
+.add-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.add-btn:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+/* 余额提示 */
+.balance-hint {
+  display: block;
+  margin-top: 5px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* 交易状态显示 */
+.transaction-status {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.transaction-status h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.status-indicator {
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.status-indicator.pending {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.status-indicator.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-indicator.failed {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.transaction-hash {
+  text-align: center;
+}
+
+.transaction-hash p {
+  margin-bottom: 10px;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.transaction-hash code {
+  background: #e9ecef;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+/* 交易示例部分 */
+.transaction-example {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.transaction-example h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.example-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.example-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.example-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.view-tx-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.view-tx-btn:hover {
+  background: #218838;
+  transform: translateY(-1px);
 }
 
 /* 按钮样式 */
@@ -370,6 +680,12 @@ body {
 .submit-btn:hover, .unwrap-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.submit-btn:disabled, .unwrap-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* 组件标题 */
@@ -450,5 +766,19 @@ body {
   
   .connection-actions button {
     width: 200px;
+  }
+  
+  .recipient-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .recipient-input input,
+  .recipient-input select {
+    width: 100%;
+  }
+  
+  .remove-btn {
+    align-self: flex-end;
   }
 } 
