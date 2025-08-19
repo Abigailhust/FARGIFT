@@ -3,9 +3,59 @@ import React, { useState, useEffect } from 'react';
 export function GiftList() {
   const [gifts, setGifts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [balance, setBalance] = useState('0');
   const [isConnected, setIsConnected] = useState(false);
   const [address, setAddress] = useState('');
+  const [balance, setBalance] = useState('0');
+
+  // Mock contacts with avatars - in real app, this would come from user's address book
+  const mockContacts = [
+    { name: 'Alice', address: '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6', avatar: '👩‍💼' },
+    { name: 'Bob', address: '0x1234567890123456789012345678901234567890', avatar: '👨‍💻' },
+    { name: 'Charlie', address: '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd', avatar: '👨‍🎨' },
+    { name: 'Diana', address: '0x9876543210987654321098765432109876543210', avatar: '👩‍🎭' },
+    { name: 'Eve', address: '0x1111111111111111111111111111111111111111', avatar: '👩‍🔬' },
+    { name: 'Frank', address: '0x2222222222222222222222222222222222222222', avatar: '👨‍🏫' }
+  ];
+
+  // Mock gifts data with avatars
+  const mockGifts = [
+    {
+      id: '1',
+      sender: '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6',
+      recipients: ['0x1234567890123456789012345678901234567890', '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd'],
+      amount: '1000 ETH',
+      limit: '1 ETH per account',
+      title: 'Luv u ® !',
+      desc: 'to Vitalik',
+      status: 'active',
+      createdAt: '2024-01-15 14:30',
+      avatar: '👩‍💼'
+    },
+    {
+      id: '2',
+      sender: '0x1234567890123456789012345678901234567890',
+      recipients: ['EVERYONE'],
+      amount: '500 ETH',
+      limit: '0.5 ETH per account',
+      title: 'Happy New Year!',
+      desc: 'Wishing everyone a wonderful year ahead',
+      status: 'active',
+      createdAt: '2024-01-14 09:15',
+      avatar: '👨‍💻'
+    },
+    {
+      id: '3',
+      sender: '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd',
+      recipients: ['0x9876543210987654321098765432109876543210'],
+      amount: '100 ETH',
+      limit: '100 ETH per account',
+      title: 'Birthday Gift',
+      desc: 'Happy Birthday! Hope you have an amazing day',
+      status: 'unwrapped',
+      createdAt: '2024-01-13 16:45',
+      avatar: '👨‍🎨'
+    }
+  ];
 
   useEffect(() => {
     checkConnection();
@@ -70,124 +120,89 @@ export function GiftList() {
     window.location.reload();
   };
 
-  const loadGifts = async () => {
-    try {
-      // Mock data with the specific content you requested
-      const mockGifts = [
-        {
-          id: '0x1234...',
-          sender: '0x2333.33330',
-          recipients: ['EVERYONE'],
-          amount: '1000 ETH',
-          limit: '1 ETH per account',
-          status: 'active',
-          createdAt: '2024-01-15',
-          title: 'Luv u ® ! to Vitalik',
-          desc: 'Special gift for everyone'
-        },
-        {
-          id: '0x5678...',
-          sender: '0xabcd...',
-          recipients: ['0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6'],
-          amount: '0.5 ETH',
-          limit: '0.5 ETH per account',
-          status: 'active',
-          createdAt: '2024-01-14',
-          title: 'Birthday Gift',
-          desc: 'Happy Birthday!'
-        },
-        {
-          id: '0x9abc...',
-          sender: '0xefgh...',
-          recipients: ['0x1234567890123456789012345678901234567890'],
-          amount: '0.1 ETH',
-          limit: '0.1 ETH per account',
-          status: 'unwrapped',
-          createdAt: '2024-01-13',
-          title: 'Welcome Gift',
-          desc: 'Welcome to the community!'
-        }
-      ];
-      
+  const loadGifts = () => {
+    // Simulate loading
+    setTimeout(() => {
       setGifts(mockGifts);
-    } catch (error) {
-      console.error('Failed to load gift list:', error);
-    } finally {
       setIsLoading(false);
-    }
+    }, 1000);
+  };
+
+  const formatAddress = (address) => {
+    if (address === 'EVERYONE') return 'EVERYONE';
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
   const getStatusBadge = (status) => {
-    const statusMap = {
+    const statusConfig = {
       'active': { text: 'ACTIVE', class: 'status-active' },
       'unwrapped': { text: 'UNWRAPPED', class: 'status-unwrapped' },
       'taken_back': { text: 'TAKEN BACK', class: 'status-taken-back' },
       'expired': { text: 'EXPIRED', class: 'status-expired' }
     };
-    
-    const statusInfo = statusMap[status] || { text: status, class: 'status-unknown' };
-    
-    return <span className={`status-badge ${statusInfo.class}`}>{statusInfo.text}</span>;
+
+    const config = statusConfig[status] || { text: 'UNKNOWN', class: 'status-unknown' };
+
+    return (
+      <span className={`status-badge ${config.class}`}>
+        {config.text}
+      </span>
+    );
   };
 
-  const formatAddress = (address) => {
-    if (!address) return 'N/A';
-    if (address === 'EVERYONE') return 'EVERYONE';
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  const getUserAvatar = (address) => {
+    const contact = mockContacts.find(c => c.address.toLowerCase() === address.toLowerCase());
+    return contact ? contact.avatar : '👤';
   };
 
-  const handleClaim = async (giftId) => {
-    if (!isConnected) {
-      alert('Please connect your wallet first');
-      return;
-    }
-
-    try {
-      // TODO: Call smart contract to claim gift
-      console.log('Claiming gift:', giftId);
-      alert('Gift claimed successfully!');
-    } catch (error) {
-      console.error('Failed to claim gift:', error);
-      alert('Failed to claim gift: ' + error.message);
-    }
+  const handleClaim = (giftId) => {
+    console.log('Claiming gift:', giftId);
+    alert('Claim functionality will be implemented with smart contract integration');
   };
 
   const handleExplore = (giftId) => {
-    // Open in block explorer
-    const explorerUrl = `https://sepolia.arbiscan.io/tx/${giftId}`;
-    window.open(explorerUrl, '_blank');
+    console.log('Exploring gift:', giftId);
+    alert('Explore functionality will be implemented with smart contract integration');
   };
 
   if (isLoading) {
     return (
       <div className="gift-list">
-        <h2>📋 Gift List</h2>
-        <div className="loading">Loading...</div>
+        <div className="loading">
+          <div className="loading-spinner"></div>
+          <p>Loading gifts...</p>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="gift-list">
-      <h2>📋 Gift List</h2>
-      
       {isConnected && (
         <div className="balance-info">
-          <p>💰 Your Balance: <strong>{balance} ETH</strong></p>
+          <div className="balance-amount">{balance} ETH</div>
+          <div className="balance-label">Your Available Balance</div>
         </div>
       )}
       
       {gifts.length === 0 ? (
         <div className="empty-state">
+          <div className="empty-icon">🎁</div>
           <p>No gifts found</p>
-          <p>Create your first gift!</p>
+          <p>Create your first gift to get started!</p>
         </div>
       ) : (
         <div className="gifts-container">
           {gifts.map((gift, index) => (
             <div key={index} className={`gift-item ${gift.status}`}>
               <div className="gift-header">
-                <span className="gift-id">{gift.id}</span>
+                <div className="gift-sender">
+                  <div className="user-avatar">{getUserAvatar(gift.sender)}</div>
+                  <div className="sender-info">
+                    <div className="sender-name">{formatAddress(gift.sender)}</div>
+                    <div className="gift-time">{gift.createdAt}</div>
+                  </div>
+                </div>
                 {getStatusBadge(gift.status)}
               </div>
               
@@ -198,46 +213,36 @@ export function GiftList() {
               )}
               
               <div className="gift-details">
-                <div className="detail-row">
-                  <span className="label">From:</span>
-                  <span className="value address">{formatAddress(gift.sender)}</span>
-                </div>
-                
-                <div className="detail-row">
-                  <span className="label">To:</span>
-                  <span className="value recipient">
+                <div className="gift-detail">
+                  <div className="gift-detail-label">To:</div>
+                  <div className="gift-detail-value recipient">
                     {gift.recipients.map(r => formatAddress(r)).join(', ')}
-                  </span>
+                  </div>
                 </div>
                 
-                <div className="detail-row">
-                  <span className="label">Amount:</span>
-                  <span className="value amount">{gift.amount}</span>
+                <div className="gift-detail">
+                  <div className="gift-detail-label">Amount:</div>
+                  <div className="gift-detail-value amount">{gift.amount}</div>
                 </div>
                 
-                <div className="detail-row">
-                  <span className="label">Limit:</span>
-                  <span className="value limit">{gift.limit}</span>
+                <div className="gift-detail">
+                  <div className="gift-detail-label">Limit:</div>
+                  <div className="gift-detail-value limit">{gift.limit}</div>
                 </div>
                 
                 {gift.desc && (
-                  <div className="detail-row">
-                    <span className="label">Message:</span>
-                    <span className="value">{gift.desc}</span>
+                  <div className="gift-detail">
+                    <div className="gift-detail-label">Message:</div>
+                    <div className="gift-detail-value">{gift.desc}</div>
                   </div>
                 )}
-                
-                <div className="detail-row">
-                  <span className="label">Created:</span>
-                  <span className="value">{gift.createdAt}</span>
-                </div>
               </div>
 
               <div className="gift-actions">
                 {gift.status === 'active' && (
                   <button 
                     onClick={() => handleClaim(gift.id)}
-                    className="claim-btn"
+                    className="btn btn-primary"
                   >
                     $ CLAIM!
                   </button>
@@ -245,7 +250,7 @@ export function GiftList() {
                 
                 <button 
                   onClick={() => handleExplore(gift.id)}
-                  className="explore-btn"
+                  className="btn btn-secondary"
                 >
                   explore
                 </button>

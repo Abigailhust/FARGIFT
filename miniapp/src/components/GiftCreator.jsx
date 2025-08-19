@@ -210,7 +210,6 @@ export function GiftCreator() {
   if (!isConnected) {
     return (
       <div className="gift-creator">
-        <h2>🎁 Create New Gift</h2>
         <div className="not-connected">
           <p>Please connect your wallet to create gifts</p>
         </div>
@@ -220,10 +219,9 @@ export function GiftCreator() {
 
   return (
     <div className="gift-creator">
-      <h2>🎁 Create New Gift</h2>
-      
       <div className="balance-info">
-        <p>💰 Your Balance: <strong>{balance} ETH</strong></p>
+        <div className="balance-amount">{balance} ETH</div>
+        <div className="balance-label">Your Available Balance</div>
       </div>
       
       <form onSubmit={handleSubmit} className="gift-form">
@@ -241,46 +239,49 @@ export function GiftCreator() {
         {!isPublic && (
           <div className="form-group">
             <label>Recipients:</label>
-            {recipients.map((recipient, index) => (
-              <div key={index} className="recipient-input">
-                <input
-                  type="text"
-                  value={recipient}
-                  onChange={(e) => updateRecipient(index, e.target.value)}
-                  placeholder="0x..."
-                  disabled={isLoading}
-                />
-                <select 
-                  onChange={(e) => selectContact(index, mockContacts.find(c => c.address === e.target.value))}
-                  disabled={isLoading}
-                >
-                  <option value="">Select Contact</option>
-                  {mockContacts.map((contact, contactIndex) => (
-                    <option key={contactIndex} value={contact.address}>
-                      {contact.name} ({contact.address.slice(0, 6)}...{contact.address.slice(-4)})
-                    </option>
-                  ))}
-                </select>
-                {recipients.length > 1 && (
-                  <button 
-                    type="button" 
-                    onClick={() => removeRecipient(index)}
-                    className="remove-btn"
+            <div className="recipients-container">
+              {recipients.map((recipient, index) => (
+                <div key={index} className="recipient-item">
+                  <input
+                    type="text"
+                    value={recipient}
+                    onChange={(e) => updateRecipient(index, e.target.value)}
+                    placeholder="0x..."
+                    disabled={isLoading}
+                    className="recipient-input"
+                  />
+                  <select 
+                    onChange={(e) => selectContact(index, mockContacts.find(c => c.address === e.target.value))}
                     disabled={isLoading}
                   >
-                    ✕
-                  </button>
-                )}
-              </div>
-            ))}
-            <button 
-              type="button" 
-              onClick={addRecipient}
-              className="add-btn"
-              disabled={isLoading}
-            >
-              + Add Recipient
-            </button>
+                    <option value="">Select Contact</option>
+                    {mockContacts.map((contact, contactIndex) => (
+                      <option key={contactIndex} value={contact.address}>
+                        {contact.name} ({contact.address.slice(0, 6)}...{contact.address.slice(-4)})
+                      </option>
+                    ))}
+                  </select>
+                  {recipients.length > 1 && (
+                    <button 
+                      type="button" 
+                      onClick={() => removeRecipient(index)}
+                      className="remove-recipient"
+                      disabled={isLoading}
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button 
+                type="button" 
+                onClick={addRecipient}
+                className="add-recipient"
+                disabled={isLoading}
+              >
+                + Add Recipient
+              </button>
+            </div>
           </div>
         )}
 
@@ -325,7 +326,7 @@ export function GiftCreator() {
 
         <button 
           type="submit" 
-          className="submit-btn"
+          className="btn btn-primary"
           disabled={isLoading || parseFloat(ethAmount) > parseFloat(balance)}
         >
           {isLoading ? 'Creating...' : 'Create Gift'}
@@ -336,7 +337,7 @@ export function GiftCreator() {
       {transactionStatus && (
         <div className="transaction-status">
           <h3>Transaction Status</h3>
-          <div className={`status-indicator ${transactionStatus}`}>
+          <div className={`status ${transactionStatus}`}>
             {transactionStatus === 'pending' && '⏳ Processing...'}
             {transactionStatus === 'success' && '✅ Success!'}
             {transactionStatus === 'failed' && '❌ Failed'}
@@ -344,10 +345,10 @@ export function GiftCreator() {
           
           {transactionHash && (
             <div className="transaction-hash">
-              <p>Transaction Hash: <code>{transactionHash}</code></p>
+              <p>Transaction Hash: {transactionHash}</p>
               <button
                 type="button"
-                className="view-tx-btn"
+                className="btn btn-secondary"
                 onClick={viewTransaction}
               >
                 View Transaction
@@ -363,7 +364,7 @@ export function GiftCreator() {
         <div className="example-container">
           <button
             type="button"
-            className="example-btn"
+            className="btn btn-secondary"
             onClick={() => {
               const exampleData = {
                 recipients: ['0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6'],
@@ -384,7 +385,7 @@ export function GiftCreator() {
           {transactionHash && (
             <button
               type="button"
-              className="view-tx-btn"
+              className="btn btn-secondary"
               onClick={viewTransaction}
             >
               View Transaction

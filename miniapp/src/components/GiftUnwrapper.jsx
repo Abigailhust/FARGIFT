@@ -30,8 +30,6 @@ export function GiftUnwrapper() {
 
   return (
     <div className="gift-unwrapper">
-      <h2>🎉 Unwrap Gift</h2>
-      
       <form onSubmit={handleUnwrap} className="unwrap-form">
         <div className="form-group">
           <label>Gift ID:</label>
@@ -46,7 +44,7 @@ export function GiftUnwrapper() {
 
         <button 
           type="submit" 
-          className="unwrap-btn"
+          className="btn btn-primary"
           disabled={isLoading}
         >
           {isLoading ? 'Unwrapping...' : 'Unwrap Gift'}
